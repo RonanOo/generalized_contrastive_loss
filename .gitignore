@@ -4,3 +4,6 @@ sandbox*
 train_msls.py
 __*
 eval_msls*
+venv/*
+*.sbatch
+*.out

@@ -59,8 +59,7 @@ def extract_features(dl, net, f_length, feats_file):
         print(feats_file, "already exists. Skipping.")
 
 
-def extract_features_msls(subset, root_dir, net, f_length, image_t, savename, results_dir,
-                          batch_size, k, cls_token=False):
+def extract_features_msls(subset, root_dir, net, f_length, image_t, savename, results_dir, batch_size, k, cls_token=False):
     cities = default_cities[subset]
 
     result_file = results_dir + "/" + savename + "_predictions.txt"
@@ -254,7 +253,7 @@ def search(map_feats_file, query_feats_file, k=25):
 
 
 def extract_top_k(map_feats_file, query_feats_file, result_file, k):
-    D, I = search(map_feats_file, query_feats_file, k, m)
+    D, I = search(map_feats_file, query_feats_file, k)
     np.save(result_file, I)
 
 
@@ -281,9 +280,12 @@ if __name__ == "__main__":
     #    test_net.load_state_dict(torch.load(params.model_file)["model_state_dict"])
     # except:
     #    test_net.load_state_dict(torch.load(params.model_file)["state_dict"])
-    test_net.eval()
     if torch.cuda.is_available():
-        test_net = test_net.cuda()
+        test_net.cuda()
+    test_net.eval()
+
+
+
 
     # Create the datasets
     image_size = [int(x) for x in (params.image_size).split(",")]
